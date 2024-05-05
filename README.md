@@ -6,8 +6,16 @@ nothing triggers.
 
 The problem turns out to be related to [rules_go](https://github.com/bazelbuild/rules_go/pull/3011) that strips out
 absolute path line directives to support build hermiticity. The problem however
-is that the Golang debugger, Delve, is unable to provide source code references for work.
+is that the Golang debugger, Delve, is unable to provide source code references.
 
+We can also see in the IntelliJ logs that
+
+```
+2024-05-04 21:34:07,956 [  27736]   WARN - #com.google.idea.blaze.golang.run.BlazeDlvPositionConverter - Unable to find local file for debug path: _main/tst.go
+```
+
+I'm able to confirm by attaching a breakpoint to a live instance of the Goland and examining the BlazeDlvPositionConverter code. We can do so by setting custom VM Options on
+a Goland instance (see https://rogerhu.github.io/studying-android-studio-internals/), adding the Go IDE plugin to the Project Structure, and attaching a debugger from an IntelliJ instance.
 
 ## Workaround
 
