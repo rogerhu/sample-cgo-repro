@@ -1,0 +1,9 @@
+/bazel-*
+/.ijwb
+/.clwb
+/.idea
+/.project
+
+# macOS-specific excludes
+.DS_Store
+\#*
