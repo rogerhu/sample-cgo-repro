@@ -1,0 +1,28 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+
+cc_library(
+    name = "osxkeychain",
+    srcs = ["osxkeychain.c"],
+    hdrs = [
+        "osxkeychain.h",
+    ],
+    linkopts = [
+        "-framework CoreFoundation",
+        "-framework Security",
+    ],
+    target_compatible_with = [
+        "@platforms//os:macos",
+    ],
+    visibility = [
+        "//visibility:public",
+    ],
+)
+
+go_binary(
+    name = "test",
+    srcs = [
+        "tst.go",
+    ],
+    cdeps = [":osxkeychain"],
+    cgo = True,
+)
